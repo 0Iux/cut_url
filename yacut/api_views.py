@@ -33,3 +33,4 @@ def get_opinion(id):
     if not url_map:
         raise InvalidAPIUsage('Указанный id не найден')
     return jsonify({'url': url_map.original}), 200
+keys
