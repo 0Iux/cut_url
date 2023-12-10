@@ -17,9 +17,13 @@ def add_short():
         data['short'] = get_unique_short_id()
     else:
         if not is_valid_short_id(data['short']):
-            raise InvalidAPIUsage('Указано недопустимое имя для короткой ссылки')
+            raise InvalidAPIUsage(
+                'Указано недопустимое имя для короткой ссылки'
+            )
         if URLMap.query.filter_by(short=data['short']).first() is not None:
-            raise InvalidAPIUsage('Предложенный вариант короткой ссылки уже существует.')
+            raise InvalidAPIUsage(
+                'Предложенный вариант короткой ссылки уже существует.'
+            )
     url_map = URLMap()
     url_map.from_dict(data)
     db.session.add(url_map)
@@ -33,4 +37,3 @@ def get_opinion(id):
     if not url_map:
         raise InvalidAPIUsage('Указанный id не найден')
     return jsonify({'url': url_map.original}), 200
-keys
