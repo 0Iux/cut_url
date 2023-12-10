@@ -12,5 +12,4 @@ app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-# В список импорта добавь api_views
-from . import  views, api_views, error_handlers
+from . import views, api_views, error_handlers

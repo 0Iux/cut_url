@@ -1,6 +1,6 @@
-from random import randrange, choice
+from random import choice
 import string
-from flask import abort, flash, redirect, render_template, url_for
+from flask import flash, redirect, render_template
 
 from . import app, db
 from .forms import LinkForm
