@@ -7,7 +7,7 @@ from .forms import LinkForm
 from .models import URLMap
 
 
-def get_unique_short_id(length=8):
+def get_unique_short_id(length=6):
     characters = string.ascii_letters + string.digits
     while True:
         short_id = ''.join(choice(characters) for _ in range(length))
@@ -45,7 +45,7 @@ def index_view():
             flash('Ваша ссылка некорректна')
             return render_template('index.html', form=form)
         if URLMap.query.filter_by(short=short).first():
-            flash('Такая короткая ссылка уже существует!')
+            flash('Предложенный вариант короткой ссылки уже существует.')
             return render_template('index.html', form=form)
         url = URLMap(
             original=original,
