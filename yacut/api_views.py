@@ -9,11 +9,11 @@ from .views import is_valid_short_id, get_unique_short_id
 @app.route('/api/id/', methods=['POST'])
 def add_short():
     data = request.get_json()
-    if data is None:
+    if not data:
         raise InvalidAPIUsage('Отсутствует тело запроса')
     if 'url' not in data:
         raise InvalidAPIUsage('В запросе отсутствуют обязательные поля')
-    if 'custom_id' not in data:
+    if 'custom_id' not in data or data['custom_id'] == '':
         data['custom_id'] = get_unique_short_id()
     else:
         if not is_valid_short_id(data['custom_id']):
@@ -33,12 +33,9 @@ def add_short():
     return jsonify(url_map.to_dict()), 201
 
 
-@app.route('/api/id/<int:id>/', methods=['GET'])
-def get_opinion(id):
-    url_map_id = URLMap.query.filter_by(id=id).first()
-    if not url_map_id:
-        raise InvalidAPIUsage('Указанный id не найден')
-    url_map = URLMap.query.filter_by(short=id).first()
+@app.route('/api/id/<string:short_id>/', methods=['GET'])
+def get_opinion(short_id):
+    url_map = URLMap.query.filter_by(short=short_id).first()
     if not url_map:
         raise InvalidAPIUsage('Указанный id не найден')
     return jsonify({'url': url_map.original}), 200
