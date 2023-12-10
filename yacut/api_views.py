@@ -1,6 +1,6 @@
 from flask import jsonify, request
 
-from .error_handlers import InvalidAPIUsage
+from .error_handlers import InvalidAPIUsage, NonExistingShortId
 from . import app, db
 from .models import URLMap
 from .views import is_valid_short_id, get_unique_short_id
@@ -12,8 +12,8 @@ def add_short():
     if not data:
         raise InvalidAPIUsage('Отсутствует тело запроса')
     if 'url' not in data:
-        raise InvalidAPIUsage('В запросе отсутствуют обязательные поля')
-    if 'custom_id' not in data or data['custom_id'] == '':
+        raise InvalidAPIUsage('"url" является обязательным полем!')
+    if 'custom_id' not in data or data['custom_id'] is None:
         data['custom_id'] = get_unique_short_id()
     else:
         if not is_valid_short_id(data['custom_id']):
@@ -37,5 +37,5 @@ def add_short():
 def get_opinion(short_id):
     url_map = URLMap.query.filter_by(short=short_id).first()
     if not url_map:
-        raise InvalidAPIUsage('Указанный id не найден')
+        raise NonExistingShortId('Указанный id не найден')
     return jsonify({'url': url_map.original}), 200

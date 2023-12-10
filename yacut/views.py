@@ -39,7 +39,7 @@ def index_view():
             )
             db.session.add(url_map)
             db.session.commit()
-            flash(f'Ваша ссылка: {"http://127.0.0.1:5000/"+short}')
+            flash(f'{"http://127.0.0.1:5000/"+short}')
             return render_template('index.html', form=form)
         if not is_valid_short_id(short):
             flash('Ваша ссылка некорректна')
