@@ -11,16 +11,18 @@ def add_short():
     data = request.get_json()
     if data == {}:
         raise InvalidAPIUsage('Отсутствует тело запроса')
-    if 'original' not in data:
+    if 'url' not in data:
         raise InvalidAPIUsage('В запросе отсутствуют обязательные поля')
-    if 'short' not in data:
-        data['short'] = get_unique_short_id()
+    if 'short_link' not in data:
+        data['short_link'] = get_unique_short_id()
     else:
-        if not is_valid_short_id(data['short']):
+        if not is_valid_short_id(data['short_link']):
             raise InvalidAPIUsage(
                 'Указано недопустимое имя для короткой ссылки'
             )
-        if URLMap.query.filter_by(short=data['short']).first() is not None:
+        if URLMap.query.filter_by(
+            short=data['short_link']
+        ).first() is not None:
             raise InvalidAPIUsage(
                 'Предложенный вариант короткой ссылки уже существует.'
             )
