@@ -7,7 +7,6 @@
       <p class="text-center my-4">
         Создайте короткую ссылку автоматически или предложите свой вариант
       </p>
-
       <div class="container">
         <div class="row my-3">
           <div class="col-sm">
@@ -17,13 +16,8 @@
               {{ form.csrf_token }}
               <div>
                 <div>
-                  <!-- <input type="text" class="form-control form-control-lg py-2 mb-3" id="form-title" name=""
-                    placeholder="Длинная ссылка"> -->
                     {{ form.original_link(class="form-control form-control-lg py-3 mb-3", placeholder=form.original_link.label.text) }}
                   <p>
-
-                    
-                    
                     {% if form.original_link.errors %}
                       {% for error in form.original_link.errors %}
                         <span style="color: red">{{ error }}</span>
@@ -42,7 +36,6 @@
                     {% endif %}
                   </p>
                 </div>
-
                 <input type="submit" class="btn btn-primary" value="Создать">
               </div>
             </form>
@@ -51,7 +44,6 @@
           </div>
         </div>
       </div>
-
       <div class="container">
         <div class="row ">
           <div class="col-sm">
